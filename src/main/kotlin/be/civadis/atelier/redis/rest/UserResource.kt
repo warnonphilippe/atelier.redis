@@ -23,9 +23,9 @@ class UserResource (val repository: UserRepository){
     }
 
     @GetMapping()
-    fun allPeople(): ResponseEntity<MutableIterable<User>> {
+    fun allPeople(): ResponseEntity<List<User>> {
         logger.info("List ALL users")
-        val users = repository.findAll()
+        val users = repository.findAll().toList();
         return ResponseEntity(users, HttpStatus.OK)
     }
 
