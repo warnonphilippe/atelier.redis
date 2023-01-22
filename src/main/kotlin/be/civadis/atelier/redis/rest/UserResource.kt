@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 class UserResource (val repository: UserRepository){
 
     companion object {
@@ -16,17 +16,17 @@ class UserResource (val repository: UserRepository){
     }
 
     @PostMapping()
-    fun addPerson(@RequestBody user: User): ResponseEntity<String> {
+    fun addPerson(@RequestBody user: User): ResponseEntity<User> {
         logger.info("Add NEW user")
         repository.save(user)
-        return ResponseEntity("Saved user - ${user.username}", HttpStatus.CREATED)
+        return ResponseEntity(user, HttpStatus.CREATED)
     }
 
     @GetMapping()
     fun allPeople(): ResponseEntity<MutableIterable<User>> {
         logger.info("List ALL users")
-        val people = repository.findAll()
-        return ResponseEntity(people, HttpStatus.OK)
+        val users = repository.findAll()
+        return ResponseEntity(users, HttpStatus.OK)
     }
 
 }
